@@ -29,7 +29,7 @@
             overflow-x: hidden;
 
             */
-            background-image: url('photo/homebg1.jpg');
+            background-image: url('photo/homebg.jpg');
             background-size: cover;    
             background-repeat: no-repeat; 
             background-attachment: fixed; 
@@ -251,14 +251,18 @@
     <section class="features">
         <h2 class="section-title">我的過去</h2>
         <div class="cards-container">
-            <a href="family.html" target="_blank" class="card-link">
-            <div class="card">
-                <div class="card-icon">❤</div>
-                <h3>我的家人</h3>
-                <p>用照片讓回憶更有畫面</p>
-            </div></a>
+
             
-            <a href="https://LunaCinema.xyz" target="_blank" class="card-link">
+
+            <div onclick="checkPassword()" class="card-link" style="cursor: pointer;">
+                <div class="card">
+                    <div class="card-icon">❤</div>
+                    <h3>我的家人</h3>
+                    <p>用照片讓回憶更有畫面</p>
+                </div>
+            </div>
+
+            <a href="#" target="_blank" class="card-link">
             <div class="card">
                 <div class="card-icon">⚡</div>
                 <h3>待加入</h3>
@@ -269,10 +273,56 @@
             <div class="card">
                 <div class="card-icon">📺</div>
                 <h3>LunaCinema</h3>
-                <p>LunaCinema</p>
+                <p>影院暫不對外開放</p>
             </div>
             </a>
         </div>
     </section>
+
+    <script>
+        function checkPassword() {
+            document.getElementById("passwordInput").value = "";
+            document.getElementById("errorText").textContent = "";
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("passwordModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("passwordModal").style.display = "none";
+        }
+
+        function submitPassword() {
+            const input = document.getElementById("passwordInput").value.trim();
+            const correctPassword = "911203";
+            const errorText = document.getElementById("errorText");
+
+            if (input === "") {
+                errorText.textContent = "密碼不能為空。";
+                return;
+            }
+
+            if (input === correctPassword) {
+                closeModal();
+                window.open("family.html", "_blank");
+            } else {
+                errorText.textContent = "密碼錯誤，看看自己的家人吧，不要看我的。";
+                return;
+            }
+        }
+    </script>
+
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;"></div>
+
+    <div id="passwordModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; color:black; padding:2rem; border-radius:10px; z-index:1001; max-width:300px; text-align:center;">
+        <h3>進入「我的家人」</h3>
+        <p style="margin: 10px 0;">請輸入密碼：</p>
+        <input type="password" id="passwordInput" style="width:100%; padding:8px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;" />
+        <div id="errorText" style="color:red; font-size:0.9rem; margin-bottom:10px;"></div>
+        <button onclick="submitPassword()" style="padding:8px 16px; background:#6c5ce7; color:white; border:none; border-radius:5px; cursor:pointer;">確認</button>
+        <button onclick="closeModal()" style="padding:8px 16px; margin-left:10px; background:#ccc; border:none; border-radius:5px; cursor:pointer;">取消</button>
+    </div>
+
+
 </body>
 </html>
