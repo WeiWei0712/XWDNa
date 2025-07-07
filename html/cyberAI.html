@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>雲端 AI vs 本地 AI｜Flowring 觀點</title>
+
+  <!-- Fonts & Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/cyberAI.css" />
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <h1>雲端 AI 與本地 AI</h1>
+    <p class="subtitle">依 Flowring 視角深入比較兩種部署模式</p>
+  </header>
+
+  <div class="container">
+    <!-- TOC -->
+    <aside class="toc">
+      <h2>目錄</h2>
+      <nav>
+        <ul>
+          <li><a href="#cloud-what">什麼是雲端 AI</a></li>
+          <li><a href="#cloud-req">雲端 AI 的需求</a></li>
+          <li><a href="#cloud-logic">雲端 AI 的實現邏輯</a></li>
+          <li><a href="#onprem-what">什麼是本地 AI</a></li>
+          <li><a href="#onprem-req">本地 AI 的需求</a></li>
+          <li><a href="#onprem-logic">本地 AI 的實現邏輯</a></li>
+          <li><a href="#compare">差異比較</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Article -->
+    <article>
+      <!-- 1 ─────────────────────────── -->
+      <section id="cloud-what" class="reveal">
+        <h2>什麼是雲端 AI？（Cloud AI / AI-as-a-Service）</h2>
+        <p>
+          雲端 AI 是<strong>由第三方雲平台</strong>（AWS、Azure、Google Cloud 等）提供的
+          AI 服務。企業透過網路即可存取 GPU、機器學習平台（Amazon SageMaker、Vertex AI）或
+          SaaS 模型 API，<strong>無需自行維運硬體</strong>。
+        </p>
+        <ul>
+          <li><strong>數據分析</strong>：以 BigQuery ML 進行銷售預測。</li>
+          <li><strong>智慧客服</strong>：AWS Lex × Amazon Connect 多語聊天。</li>
+          <li><strong>生成內容</strong>：Bedrock / Gemini 產生行銷文案。</li>
+        </ul>
+      </section>
+
+      <!-- 2 ─────────────────────────── -->
+      <section id="cloud-req" class="reveal">
+        <h2>雲端 AI 的需求</h2>
+        <ul>
+          <li><strong>高速頻寬</strong>：1 Gbps↑，大量資料上傳可考慮 Direct Connect。</li>
+          <li><strong>GPU Quota</strong>：H100 / L40S 申請通常需 1 週以上。</li>
+          <li><strong>FinOps</strong>：AWS Cost Explorer、GCP Billing Report 監控。</li>
+          <li><strong>資安合規</strong>：TLS 1.3、IAM 最小權限、GDPR / HIPAA。</li>
+        </ul>
+      </section>
+
+      <!-- 3 ─────────────────────────── -->
+      <section id="cloud-logic" class="reveal">
+        <h2>雲端 AI 的實現邏輯</h2>
+        <ol>
+          <li>在 <em>AWS EKS</em> 建立 H100 節點池。</li>
+          <li>拉取 <code>NVIDIA NGC · PyTorch 2</code> 容器。</li>
+          <li>以 <code>S3 Fuse</code> 掛載資料。</li>
+          <li><code>Kubeflow TFJob</code> 做分散訓練。</li>
+          <li><code>NVIDIA Triton</code> + <code>KEDA</code> 推論自動擴縮。</li>
+          <li>CloudWatch + Grafana 監控 GPU 與費用。</li>
+        </ol>
+      </section>
+
+      <!-- 4 ─────────────────────────── -->
+      <section id="onprem-what" class="reveal">
+        <h2>什麼是本地 AI？（On-Premises / 地端 AI）</h2>
+        <p>
+          本地 AI 指企業在<strong>自有機房</strong>佈署 GPU 伺服器
+          （DGX H100、Supermicro GPU Server、AMD MI300）。  
+          Flowring 指出其優勢為 <em>資料主權、高可控性、低延遲</em>。
+        </p>
+      </section>
+
+      <!-- 5 ─────────────────────────── -->
+      <section id="onprem-req" class="reveal">
+        <h2>本地 AI 的需求</h2>
+        <ul>
+          <li><strong>電力散熱</strong>：DGX H100 10 kW，需液冷或 Rear-Door HEX。</li>
+          <li><strong>高速網路</strong>：Mellanox Spectrum-4 400 GbE 或 IB 400 Gb/s。</li>
+          <li><strong>採購交期</strong>：H100 SXM 約 8-12 週，要提前下單。</li>
+          <li><strong>MLOps 團隊</strong>：3-5 人維護 K8s、Slurm、韌體。</li>
+          <li><strong>零信任安全</strong>：Secure Boot、TPM 2.0、SBOM 掃描。</li>
+        </ul>
+      </section>
+
+      <!-- 6 ─────────────────────────── -->
+      <section id="onprem-logic" class="reveal">
+        <h2>本地 AI 的實現邏輯</h2>
+        <ol>
+          <li>安裝 <code>Ubuntu 22.04</code> + 最新 <code>NVIDIA Driver</code>。</li>
+          <li>虛擬化：<code>VMware vSphere 8 + NVIDIA vGPU</code> 或裸機 OpenShift AI。</li>
+          <li>佈署 <code>Kubernetes 1.30</code>，用 <code>FluxCD</code> 做 GitOps。</li>
+          <li>資料湖：Kafka → Spark → Delta Lake；<code>Feast</code> 特徵庫。</li>
+          <li>訓練：<code>Slurm</code> 或 <code>Kubeflow MPIJob</code>。</li>
+          <li>推論：<code>NVIDIA Triton</code> + <code>Istio</code> A/B Test。</li>
+        </ol>
+      </section>
+
+      <!-- 7 ─────────────────────────── -->
+      <section id="compare" class="reveal">
+        <h2>雲端 vs 本地：差異比較</h2>
+        <ul>
+          <li><strong>資本支出</strong>：雲端零 CAPEX；本地先購硬體。</li>
+          <li><strong>擴充彈性</strong>：雲端 Auto Scale；本地受限機房。</li>
+          <li><strong>資料隱私</strong>：本地完全掌握；雲端須評估合規。</li>
+          <li><strong>延遲</strong>：本地毫秒級；雲端取決於網路。</li>
+          <li><strong>維運</strong>：雲端由 CSP；本地自建 DC Ops。</li>
+        </ul>
+
+        <!-- 支出項目 -->
+        <h3>主要支出項目</h3>
+        <div class="cost-grid">
+          <div class="card neon">
+            <h4>雲端 AI</h4>
+            <ul>
+              <li>⚡ <strong>運算費</strong>：EC2 / VM GPU On-Demand、Reserved、Spot</li>
+              <li>💾 <strong>儲存費</strong>：S3 / Blob / GCS、Snapshot、Glacier</li>
+              <li>🛰️ <strong>網路費</strong>：Outbound Data Transfer、Direct Connect</li>
+              <li>🔐 <strong>安全服務</strong>：WAF、Shield、GuardDuty、Cloud DLP</li>
+              <li>📊 <strong>監控費</strong>：CloudWatch Logs、Stackdriver、Datadog</li>
+            </ul>
+          </div>
+
+          <div class="card neon">
+            <h4>本地 AI</h4>
+            <ul>
+              <li>🏗️ <strong>硬體 CAPEX</strong>：DGX H100 / GPU Server、交換器</li>
+              <li>🔌 <strong>電力</strong>：10 kW/機 × 電價 &amp; PUE</li>
+              <li>❄️ <strong>冷卻</strong>：液冷 CDU / Rear-Door HEX 投資</li>
+              <li>👨‍💻 <strong>人力</strong>：SRE、MLOps 薪資、輪班成本</li>
+              <li>🛡️ <strong>資安</strong>：防火牆、零信任、SBOM 掃描訂閱</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>一週成本試算（8×H100，連續 168 h）</h3>
+        <ul>
+          <li>雲端 On-Demand：<code>$31.46/h × 168h ≈ $5,286</code></li>
+          <li>雲端 Spot –90%：<code>≈ $529</code>（隨時回收風險）</li>
+          <li>本地 DGX-H100 折舊：<code>$1.4/h × 168h ≈ $2,100</code></li>
+        </ul>
+        <p class="note">短期試驗 → 雲端；長期大量運算 → 本地或混合最划算。</p>
+      </section>
+    </article>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Your Name. 內容節錄並改寫自華苓科技 Flowring Blog。</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/AI.js"></script>
+</body>
+</html>
