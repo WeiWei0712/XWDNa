@@ -29,3 +29,20 @@ const spyObs = new IntersectionObserver(
   { rootMargin: '-40% 0px -55% 0px' }
 );
 sections.forEach(sec=>spyObs.observe(sec));
+
+/***************** 4. Back-to-Top Button *****************/
+const topBtn = document.getElementById('backToTop');
+
+// 滾動超過 300px 就顯示
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    topBtn.classList.add('show');
+  } else {
+    topBtn.classList.remove('show');
+  }
+});
+
+// 平滑捲回最上端
+topBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
