@@ -18,7 +18,7 @@
             --secondary-color: #00cec9;
             --dark-bg: #1e272e;
             --light-text: #f5f6fa;
-            --glass-effect: rgba(255, 255, 255, 0.1);
+            --glass-effect: rgba(255, 255, 255, 0);
         }
 
         body {
@@ -43,9 +43,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 5%;
-            backdrop-filter: blur(10px);
-            background: var(--glass-effect);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /*backdrop-filter: blur(10px);*/
+            background: transparent; /* 改為 transparent */
+            /*border-bottom: 1px solid rgba(255, 255, 255, 0.1);*/
             position: fixed;
             width: 100%;
             z-index: 100;
