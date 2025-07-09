@@ -12,7 +12,7 @@ function login(event) {
     message.style.color = "#27ae60";
     message.textContent = "登入成功！歡迎回來，" + username + "。";
     // 若要導向其他頁面，可啟用下面這行：
-    window.location.href = "app.html";
+    window.location.href = "XSCinema.html";
   } else {
     message.style.color = "#e74c3c";
     message.textContent = "帳號或密碼錯誤，請再試一次。";
