@@ -5,8 +5,8 @@ function login(event) {
   const password = document.getElementById("password").value.trim();
   const message = document.getElementById("message");
 
-  const validUsername = "admin";
-  const validPassword = "123456";
+  const validUsername = "KevinSun";
+  const validPassword = "Tyuio56789_";
 
   if (username === validUsername && password === validPassword) {
     message.style.color = "#27ae60";
