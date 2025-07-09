@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  background-color: #0e0f11;
+  font-family: 'Segoe UI', sans-serif;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  color: #00ffe1;
+}
+
+a {
+  color: #00ffe1;
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 10%;
+}
+
+.hero {
+  background: linear-gradient(to right, #0f0f1c, #1a1a2e);
+  padding: 60px 0;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-img img {
+  width: 240px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00ffe1;
+}
+
+section {
+  padding: 60px 10%;
+  border-top: 1px solid #1f1f2e;
+}
+
+.skill-item {
+  margin: 20px 0;
+}
+
+.bar {
+  background: #333;
+  border-radius: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  background: linear-gradient(to right, #00d4ff, #0088ff);
+  height: 100%;
+  animation: grow 2s forwards;
+}
+
+@keyframes grow {
+  from { width: 0; }
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.project-card {
+  background: #1f1f2e;
+  padding: 20px;
+  border: 1px solid #00ffe1;
+  border-radius: 12px;
+  flex: 1 1 45%;
+  min-width: 280px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  background: #111;
+  color: #888;
+}
