@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>各縣市餐廳推薦</title>
+  <style>
+    :root {
+      --bg: #0f172a;   /* 背景深色 */
+      --fg: #f1f5f9;   /* 文字 */
+      --muted: #94a3b8;/* 次要文字 */
+      --card: #1e293b; /* 卡片背景 */
+      --line: #334155; /* 邊框 */
+      --btn: #334155;
+      --btn-hover: #475569;
+      --btn-primary: #2563eb;
+      --btn-primary-hover: #1d4ed8;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial}
+    a{color:#60a5fa}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    h1{margin:0 0 10px;font-size:28px}
+    .hint{color:var(--muted);font-size:13px;margin-top:6px}
+    .controls{display:grid;grid-template-columns:180px 1fr 160px 160px;gap:10px;margin:14px 0 18px}
+    .input,.select{height:40px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg)}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media (min-width:980px){.grid{grid-template-columns:1.4fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+    .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .title{font-size:18px;font-weight:600}
+    .meta{color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .tag{border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;color:var(--muted);background:var(--bg)}
+    .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .btn{height:34px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--btn);color:var(--fg);cursor:pointer;transition:background .2s}
+    .btn:hover{background:var(--btn-hover)}
+    .btn.primary{background:var(--btn-primary);border-color:var(--btn-primary-hover)}
+    .btn.primary:hover{background:var(--btn-primary-hover)}
+    .map{position:sticky;top:16px}
+    .iframeBox{aspect-ratio:4/3;width:100%;border:0;border-radius:16px;overflow:hidden}
+    .empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;background:var(--card)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>各縣市餐廳推薦</h1>
+    <div class="hint">選縣市 → 左側清單顯示推薦；點「地圖」會把右側 Google 地圖移到該餐廳。</div>
+
+    <!-- 篩選 -->
+    <div class="controls">
+      <select id="city" class="select"></select>
+      <input id="q" class="input" placeholder="搜尋 餐廳 / 料理 / 地址 / 標籤" />
+      <select id="cat" class="select">
+        <option value="all">全部料理</option>
+      </select>
+      <select id="price" class="select">
+        <option value="all">全部價位</option>
+        <option>$</option><option>$$</option><option>$$$</option><option>$$$$</option>
+      </select>
+    </div>
+
+    <div class="grid">
+      <!-- 左：餐廳清單 -->
+      <div id="list"></div>
+
+      <!-- 右：地圖 -->
+      <div class="map">
+        <div class="card">
+          <div style="font-size:18px;font-weight:600;margin:0 0 8px">地圖</div>
+          <div class="hint">預設顯示所選縣市中心；點左側餐廳的「地圖」會移動視角。</div>
+          <iframe id="mapFrame" class="iframeBox" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 資料與邏輯 -->
+  <script src="../js/restaurants.js"></script>
+</body>
+</html>
